@@ -80,8 +80,9 @@ These thresholds replace previously conservative levels that would have triggere
 ### Infrastructure Design
 - **GitHub Actions**: Hourly automated calculations (sufficient for 7-day dispute windows)
 - **Public RPC Endpoints**: No API keys required, fully transparent access
-  - Primary: LlamaRPC (`https://eth.llamarpc.com`)
-  - Fallbacks: LinkPool, PublicNode, 1RPC
+  - Primary: PublicNode (`https://ethereum-rpc.publicnode.com`)
+  - Fallbacks: dRPC, 1RPC
+  - Optional: `ETH_RPC_URL` env var prepended as primary when set
 - **Static JSON Storage**: Results saved to version-controlled JSON file
 - **Audit Trail**: All calculations and changes tracked in git history
 - **No Private Infrastructure**: No databases, no API keys, fully auditable
@@ -93,9 +94,9 @@ These thresholds replace previously conservative levels that would have triggere
 
 ### RPC Failover Strategy
 The system attempts to connect to public RPC endpoints in order of preference:
-1. **LlamaRPC** (`https://eth.llamarpc.com`)
-2. **LinkPool** (`https://main-light.eth.linkpool.io`)
-3. **PublicNode** (`https://ethereum.publicnode.com`)
+1. **`ETH_RPC_URL`** (when configured via environment/secret)
+2. **PublicNode** (`https://ethereum-rpc.publicnode.com`)
+3. **dRPC** (`https://eth.drpc.org`)
 4. **1RPC** (`https://1rpc.io/eth`)
 
 Each endpoint is tested with a `getBlockNumber()` call before use. If all endpoints fail, the system reports an error state rather than falling back to mock data. Connection latency and endpoint used are logged for transparency.
