@@ -39,14 +39,12 @@ export const ForkDetailsCard = ({ gauge }: ForkDetailsCardProps) => {
 			<DialogTrigger asChild>
 				<button
 					type="button"
-					className="relative inline-block group cursor-pointer focus:outline-hidden transition-all duration-200"
+					className="relative mb-2 inline-block group cursor-pointer focus:outline-hidden transition-all duration-200"
 					aria-label="View fork meter details"
 					title="Click for more information"
 				>
 					{/* Gauge */}
-					<div className="mb-2">
-						{gauge}
-					</div>
+          {gauge}
 
 					{/* Info Icon - Top Right */}
 					<InfoIcon className="absolute -top-2 -right-2 p-2 rounded-full" />
@@ -68,12 +66,12 @@ export const ForkDetailsCard = ({ gauge }: ForkDetailsCardProps) => {
 
 				{/* Current Metrics */}
 				<div className="pb-3 border-b border-foreground/30">
-					<div className="text-sm">
+					<div className="font-display uppercase font-light">
 						<div className="flex justify-between">
-							<span className="text-muted-foreground">
+							<span className="text-muted-foreground tracking-wide">
 								Largest Bond
 							</span>
-							<span className="text-foreground">
+							<span className="text-foreground tracking-wider">
 								{formatNumber(
 									rawData.metrics.largestDisputeBond,
 								)}{' '}
@@ -81,18 +79,18 @@ export const ForkDetailsCard = ({ gauge }: ForkDetailsCardProps) => {
 							</span>
 						</div>
 						<div className="flex justify-between">
-							<span className="text-muted-foreground">
+  						<span className="text-muted-foreground tracking-wide">
 								Active Disputes
 							</span>
-							<span className="text-foreground">
+							<span className="text-foreground tracking-wider">
 								{rawData.metrics.activeDisputes}
 							</span>
 						</div>
 						<div className="flex justify-between">
-							<span className="text-muted-foreground">
+  						<span className="text-muted-foreground tracking-wide">
 								Fork Threshold
 							</span>
-							<span className="text-foreground">
+							<span className="text-foreground tracking-wider">
 								{formatNumber(
 									rawData.calculation.forkThreshold,
 								)}{' '}
@@ -100,10 +98,10 @@ export const ForkDetailsCard = ({ gauge }: ForkDetailsCardProps) => {
 							</span>
 						</div>
 						<div className="flex justify-between">
-							<span className="text-muted-foreground">
+							<span className="text-muted-foreground tracking-wide">
 								Last Updated
 							</span>
-							<span className="text-foreground text-xs">
+							<span className="text-foreground tracking-wider">
 								{formatTime(rawData.lastRiskChange)}
 							</span>
 						</div>
@@ -115,9 +113,9 @@ export const ForkDetailsCard = ({ gauge }: ForkDetailsCardProps) => {
 					<div className="flex justify-center">
 						<ForkAsciiArt />
 					</div>
-					<div className="text-left uppercase">
-						<div className="pb-2 mb-2 border-b text-loud-foreground border-muted-foreground border-dashed font-bold">What's a fork?</div>
-						<p className="text-sm font-normal leading-tight">Forking is the last market resolution method. It is a very disruptive process and is intended to be a rare occurrence.</p>
+					<div className="text-left uppercase font-display">
+						<div className="pb-2 mb-2 border-b text-lg tracking-wider text-loud-foreground border-muted-foreground border-dashed font-bold">What's a fork?</div>
+						<p className="font-prose normal-case text-sm leading-tight">Forking is the last market resolution method. It is a very disruptive process and is intended to be a rare occurrence.</p>
 					</div>
 				</div>
 
@@ -147,7 +145,7 @@ const CTAButton = ({ href, children, target, rel }: { href: string; children: Re
 		rel={rel}
 		className={cn(
 			'w-full',
-			'font-normal uppercase text-foreground hover:text-loud-foreground focus:text-loud-foreground',
+			'uppercase text-foreground hover:text-loud-foreground focus:text-loud-foreground',
 			'hover:bg-foreground/5 focus:bg-foreground/5',
 			'border-foreground/30 hover:border-foreground/60 focus:border-foreground/60'
 		)}

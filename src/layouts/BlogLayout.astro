@@ -3,7 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Footer from "../components/Footer.astro";
 import BlogNavigation from "../components/BlogNavigation.tsx";
 import BlogPostMeta from "../components/BlogPostMeta.astro";
-import PageHeader from "../components/PageHeader.astro";
+import PageHeader from "../components/PageHeader.tsx";
+import PageTitle from "../components/PageTitle.astro";
 import { withBase } from "../lib/utils";
 
 interface Post {
@@ -23,7 +24,7 @@ interface Props {
   nextPost?: Post;
 }
 
-const { title, description, author, publishDate, updatedDate, ogImage, postUrl, prevPost, nextPost } = Astro.props;
+const { title, description, author, publishDate, updatedDate, ogImage, prevPost, nextPost } = Astro.props;
 ---
 
 <Layout
@@ -34,16 +35,12 @@ const { title, description, author, publishDate, updatedDate, ogImage, postUrl, 
 >
   <div class="grid grid-rows-[auto_1fr_auto] min-h-screen">
     {/* Top Section: Navigation */}
-    <PageHeader backHref={withBase('/?intro=false')} />
+    <PageHeader client:load backHref={withBase('/?intro=false')} />
 
     {/* Middle Section: Scrollable Content */}
     <main class="overflow-y-auto px-4 md:px-8 pt-8 mb-12">
-      <div class="max-w-2xl mx-auto">
-        <h1 class="text-center uppercase text-2xl mb-4">
-          <span class="text-muted-foreground">BLOG</span>
-          <span class="text-muted-foreground mx-2">//</span>
-          <span class="text-loud-foreground font-bold">{title}</span>
-        </h1>
+      <div class="max-w-3xl mx-auto">
+        <PageTitle prefix="BLOG" title={title} />
         <BlogPostMeta
           author={author}
           publishDate={publishDate}
@@ -51,7 +48,7 @@ const { title, description, author, publishDate, updatedDate, ogImage, postUrl, 
         />
 
         {/* Main Content */}
-        <article class="prose prose-sm prose-invert max-w-none pt-6 px-4">
+        <article class="prose prose-invert max-w-none pt-6 px-4 prose-headings:font-display prose-headings:uppercase prose-headings:tracking-wide prose-p:leading-snug prose-li:leading-snug prose-ul:list-[square] prose-li:marker:text-muted-foreground prose-ol:marker:text-muted-foreground prose-blockquote:border-l-muted-foreground prose-blockquote:text-foreground prose-img:border prose-img:border-muted-foreground/30 prose-img:shadow-[0_0_2em_oklch(from_var(--color-primary)_l_c_h_/0.1)]">
           <slot />
         </article>
       </div>

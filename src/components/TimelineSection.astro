@@ -5,20 +5,28 @@ interface Props {
   isLast?: boolean;
 }
 
-const { title, date, isLast = false } = Astro.props;
+const { title, date } = Astro.props;
 ---
 
 <div
   class:list={[
-    "relative grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-8 items-start",
-    { "mb-16": !isLast },
+    "relative lg:grid lg:grid-cols-[1fr_2fr] gap-x-2 items-start group"
   ]}
 >
-  <div class="lg:text-right lg:pr-8">
-    <div class="mb-2">{date}</div>
-    <h2 class="text-2xl text-loud-foreground font-bold">{title}</h2>
+  <div class="font-display lg:text-right lg:pr-8 py-4 lg:pt-0 lg:-mt-4">
+    <div>{date}</div>
+    <h2 class="text-3xl text-loud-foreground font-bold uppercase">{title}</h2>
   </div>
-  <div class="timeline-content">
+  <div class:list={[
+    "relative pl-8 lg:pl-12 pb-8",
+    // prose formatting
+    "prose max-w-5xl prose-headings:font-display prose-headings:uppercase prose-headings:tracking-wider prose-h3:text-2xl prose-p:leading-snug",
+    "prose-li:leading-snug prose-li:list-[square] prose-li:marker:text-muted-foreground",
+    // circle marker before timeline content
+    "before:content-[''] before:absolute before:left-0 before:top-2 before:w-2.5 before:h-2.5 before:border before:border-loud-foreground before:rounded-full",
+    "after:content-none lg:after:content-[''] after:absolute after:top-6 after:bottom-0 after:left-1 after:w-px after:border after:border-muted-foreground/50",
+    "group-last:after:border-none"
+  ]}>
     <slot />
   </div>
 </div>

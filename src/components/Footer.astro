@@ -1,5 +1,5 @@
 ---
-import AugurLogo from "../assets/augur.svg";
+import { AugurLogo } from "./icons.tsx";
 import Button from "./ui/Button.tsx";
 import { withBase } from "../lib/utils";
 ---
@@ -13,19 +13,22 @@ import { withBase } from "../lib/utils";
         <!-- Column 1: Logo & Tagline -->
         <div class="md:col-span-2 lg:col-span-1 lg:place-content-end">
             <div class="text-center lg:w-max">
-                <Button variant="link" href={withBase('/?intro=false')} className="text-7xl">
+                <Button variant="link" href={withBase('/?intro=false')} className="flex flex-col gap-y-2 group">
                     <!-- Footer Logo (White) -->
-                    <AugurLogo />
+                    <AugurLogo className="text-8xl" />
+                    <span class:list={[
+                      "text-xl font-display text-muted-foreground mt-1 leading-none tracking-wider font-light uppercase",
+                      " group-hover:text-loud-foreground group-focus:text-loud-foreground"
+                    ]}>
+                        THE FRONTIER OF <br class="hidden lg:inline" />PREDICTION MARKETS
+                    </span>
                 </Button>
-                <p class="text-foreground mt-1 text-sm leading-tight">
-                    THE FRONTIER OF <br class="hidden lg:inline" />PREDICTION MARKETS
-                </p>
             </div>
         </div>
         <!-- Column 2: Social -->
         <div>
-          <h4 class="text-muted-foreground mb-4">&gt;_ SOCIAL</h4>
-          <ul class="space-y-2 text-sm">
+          <h4 class="text-muted-foreground mb-4 font-display">&gt;_ SOCIAL</h4>
+          <ul class="space-y-2">
             <li>
               <Button variant="link" href="https://github.com/AugurProject/">
                 GITHUB
@@ -50,8 +53,8 @@ import { withBase } from "../lib/utils";
         </div>
         <!-- Column 3: REP -->
         <div>
-          <h4 class="text-muted-foreground mb-4">&gt;_ REP</h4>
-          <ul class="space-y-2 text-sm">
+          <h4 class="text-muted-foreground mb-4 font-display">&gt;_ REP</h4>
+          <ul class="space-y-2">
             <li>
               <Button variant="link" href="https://etherscan.io/token/0x221657776846890989a759ba2973e427dff5c9bb">
                 REPV2 (ETHERSCAN)
@@ -91,8 +94,8 @@ import { withBase } from "../lib/utils";
         </div>
         <!-- Column 4: Companies & KB -->
         <div>
-          <h4 class="text-muted-foreground mb-4">&gt;_ COMPANIES</h4>
-          <ul class="space-y-2 text-sm mb-6">
+          <h4 class="text-muted-foreground mb-4 font-display">&gt;_ COMPANIES</h4>
+          <ul class="space-y-2 mb-6">
             <li>
               <Button variant="link" href="#">
                 THE DARK FLORIST
@@ -109,8 +112,8 @@ import { withBase } from "../lib/utils";
               </Button>
             </li>
           </ul>
-          <h4 class="text-muted-foreground mb-4">&gt;_ KB</h4>
-          <ul class="space-y-2 text-sm">
+          <h4 class="text-muted-foreground mb-4 font-display">&gt;_ KB</h4>
+          <ul class="space-y-2">
             <li>
               <Button variant="link" href={withBase('/faq')}>
                 FORK & MIGRATION FAQ
@@ -126,9 +129,9 @@ import { withBase } from "../lib/utils";
       </div>
     </div>
     <div
-      class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs pb-8"
+      class="flex flex-col md:flex-row justify-between items-center gap-4 pb-8"
     >
-      <p class="text-foreground">© 2026 AUGUR. ALL RIGHTS RESERVED.</p>
+      <p class="font-display text-foreground">© 2026 AUGUR. ALL RIGHTS RESERVED.</p>
       <nav class="flex gap-8">
         <Button variant="link" href={withBase('/terms')}>
           TERMS OF SERVICE

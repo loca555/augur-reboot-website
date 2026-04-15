@@ -2,8 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import TimelineSection from "../components/TimelineSection.astro";
 import Footer from "../components/Footer.astro";
-import PageHeader from "../components/PageHeader.astro";
-import PageHeading from "../components/PageHeading.astro";
+import PageHeader from "../components/PageHeader.tsx";
+import PageTitle from "../components/PageTitle.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import { withBase } from "../lib/utils";
 ---
@@ -23,19 +23,19 @@ import { withBase } from "../lib/utils";
     "next generation oracles"
   ]}
 >
-  <div class="grid grid-rows-[auto_1fr_auto] min-h-screen uppercase">
+  <div class="grid grid-rows-[auto_1fr_auto] min-h-screen">
     <!-- Top Section: Navigation -->
-    <PageHeader backHref={withBase('/?intro=false')} />
+    <PageHeader client:load backHref={withBase('/?intro=false')} />
 
     <!-- Middle Section: Scrollable Content -->
     <main class="overflow-y-auto px-4 md:px-8 pt-8 mb-12">
       <div class="max-w-7xl mx-auto">
-        <PageHeading text="Our Work On Augur" />
+        <PageTitle prefix="MISSION" title="OUR WORK ON AUGUR" />
 
-        <div class="max-w-4xl mx-auto">
-          <p class="text-center text-foreground mb-8 mx-auto max-w-2xl">Augur has always represented a bold idea: <span class="text-loud-foreground">A decentralized oracle system that lets anyone ask and resolve questions about the future — without trusted intermediaries</span>. In 2025, the Lituus Foundation began rebooting Augur from the ground up, adapting its core ideas to a radically changed crypto landscape. Here's how our journey has unfolded over the past year:</p>
+        <div class="max-w-5xl mx-auto">
+          <p class="text-center text-foreground my-16 mx-auto max-w-3xl">Augur has always represented a bold idea: <span class="text-loud-foreground">A decentralized oracle system that lets anyone ask and resolve questions about the future — without trusted intermediaries</span>. In 2025, the Lituus Foundation began rebooting Augur from the ground up, adapting its core ideas to a radically changed crypto landscape. Here's how our journey has unfolded over the past year:</p>
 
-          <SectionHeading text="The Reboot Timeline" />
+          <SectionHeading text="The Reboot Timeline" class="lg:mb-8" />
 
           <TimelineSection title="The Augur Reboot" date="March 31, 2025">
             <h3>Foundation Reset</h3>
