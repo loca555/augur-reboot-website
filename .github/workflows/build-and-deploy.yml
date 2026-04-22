@@ -23,7 +23,7 @@ permissions:
 jobs:
   build:
     needs: risk-monitor
-    if: github.event_name != 'schedule' || needs.risk-monitor.outputs.risk-changed == 'true'
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -38,7 +38,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Ensure fork-risk data exists (bootstrap for first deploy)
+      - name: Download fork-risk data from risk-monitor
+        uses: actions/download-artifact@v4
+        with:
+          name: fork-risk-data
+          path: public/data
+        continue-on-error: true
+
+      - name: Bootstrap fork-risk data if missing
         run: |
           mkdir -p public/data
           if [ ! -f public/data/fork-risk.json ]; then
@@ -53,7 +60,10 @@ jobs:
               calculation: {forkThreshold: 275000},
               cacheValidation: {isHealthy: true}
             }' > public/data/fork-risk.json
-            echo "✓ Created initial fork-risk.json"
+            echo "✓ Created initial fork-risk.json (no risk-monitor data available)"
+          else
+            echo "✓ Using fork-risk.json from risk-monitor"
+            cat public/data/fork-risk.json | jq '{riskLevel, riskPercentage, activeDisputes: .metrics.activeDisputes}'
           fi
 
       - name: Type check
@@ -174,6 +184,13 @@ jobs:
           path: public/cache/event-cache.json
           key: event-cache-${{ runner.os }}-${{ hashFiles('public/cache/event-cache.json') }}
 
+      - name: Upload fork-risk data
+        uses: actions/upload-artifact@v4
+        with:
+          name: fork-risk-data
+          path: public/data/fork-risk.json
+          retention-days: 1
+
   cache-rebuild:
     runs-on: ubuntu-latest
     needs: risk-monitor
@@ -207,7 +224,7 @@ jobs:
 
   deploy:
     needs: [risk-monitor, build]
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'schedule' && needs.risk-monitor.outputs.risk-changed == 'true'))
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
       contents: write
