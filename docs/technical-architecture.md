@@ -1,3 +1,8 @@
+---
+title: Technical Architecture
+tags: [architecture, astro, react, components]
+---
+
 # Technical Architecture
 
 This document describes the Astro/React implementation of the Augur Fork Meter site, including component architecture, state management, and UI patterns.
@@ -61,7 +66,7 @@ Layout.astro (Base HTML shell)
 3. Auto-refresh every 5 minutes
 4. `ForkMockProvider` wraps for demo scenarios
 
-**Data Source:** `fork-risk.json` is generated hourly by GitHub Actions. See `docs/fork-risk-monitoring-system.md` for the monitoring workflow.
+**Data Source:** `fork-risk.json` is generated hourly by GitHub Actions. See [[fork-risk-monitoring-system]] for the monitoring workflow.
 
 ## Content Collections
 
@@ -69,7 +74,7 @@ Defined in `src/content/config.ts`:
 - **blog** — MDX posts with frontmatter (title, date, excerpt, tags, etc.)
 - **learn** — Educational MDX articles
 
-See `docs/blog-feature.md` for content structure details.
+See [[blog-feature]] for content structure details.
 
 ## Styling System
 

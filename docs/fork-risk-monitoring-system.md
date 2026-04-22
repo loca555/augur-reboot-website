@@ -1,7 +1,12 @@
+---
+title: Fork Risk Monitoring System
+tags: [fork-risk, github-actions, monitoring]
+---
+
 # Fork Risk Monitoring System
 
 > **Purpose**: How we continuously monitor Augur fork risk 24/7 using GitHub Actions.
-> **Complementary doc**: See `fork-risk-assessment.md` for calculation methodology and risk thresholds.
+> **Complementary doc**: See [[fork-risk-assessment]] for calculation methodology and risk thresholds.
 
 ---
 

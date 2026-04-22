@@ -1,3 +1,8 @@
+---
+title: Fork Risk Assessment Methodology
+tags: [fork-risk, methodology]
+---
+
 # Fork Risk Assessment Methodology
 
 ## Overview
@@ -104,12 +109,10 @@ Anyone can verify calculations by:
 
 ## References
 
-1. [Augur v2 Whitepaper](augur-whitepaper-v2.pdf) - Core fork mechanics
+1. [[augur-v2-whitepaper-summary]] - Core fork mechanics
 2. [Augur Documentation](https://docs.augur.net/) - Technical specifications
 3. [GitHub Repository](/) - Source code and audit trail
 
 ---
 
-**Last Updated**: April 21, 2026
-**Version**: 2.0
-**Maintained By**: Augur Fork Meter Project
+

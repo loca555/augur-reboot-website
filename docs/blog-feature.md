@@ -1,3 +1,8 @@
+---
+title: Blog Feature
+tags: [blog, feature, mdx, content]
+---
+
 # Blog Feature Documentation
 
 The blog is built on Astro's content collections, allowing you to write posts as Markdown/MDX files with YAML frontmatter. Posts are automatically routed to `/blog/[slug]` with featured images, social sharing, and RSS feed support.
@@ -513,6 +518,6 @@ Potential improvements without architectural changes:
 
 ## Related Docs
 
-- **Technical Architecture**: `docs/technical-architecture.md`
+- **Technical Architecture**: [[technical-architecture]]
 - **Astro Content Collections**: https://docs.astro.build/en/guides/content-collections/
 - **RSS Feed**: `/rss.xml`

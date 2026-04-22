@@ -1,3 +1,8 @@
+---
+title: FAQ Feature
+tags: [faq, feature]
+---
+
 # FAQ Feature
 
 ## Overview

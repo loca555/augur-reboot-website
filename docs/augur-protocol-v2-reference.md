@@ -1,4 +1,9 @@
-# Augur Protocol Reference
+---
+title: Augur Protocol v2 Reference
+tags: [augur, protocol, reference]
+---
+
+# Augur Protocol v2 Reference
 
 This document provides a technical reference for Augur v2 protocol mechanics, focusing on the forking system and dispute resolution process. Based on the Augur v2 whitepaper.
 
