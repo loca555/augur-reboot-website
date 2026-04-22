@@ -6,8 +6,9 @@ Start here to find the right doc. Read deeper only when the task calls for it.
 
 | Doc | When to Read |
 |---|---|
-| [Fork Risk Monitoring System](fork-risk-monitoring-system.md) | Complete understanding of hourly fork risk monitoring — design, architecture, two-job workflow, concurrency locking, RPC budget, failure scenarios |
-| [Fork Risk Assessment](fork-risk-assessment.md) | Fork risk calculation methodology, thresholds, blockchain data sources, RPC failover strategy |
+| [Fork Risk Monitoring System](fork-risk-monitoring-system.md) | GitHub Actions pipeline: three-job workflow, cache strategy, concurrency, failure handling, RPC costs |
+| [Fork Risk Assessment](fork-risk-assessment.md) | Fork risk calculation methodology, thresholds, blockchain data sources, market tracking, RPC failover strategy |
+| [Fork Risk Strategy](fork-risk-strategy.md) | Implementation spec for the workflow rewrite — design rationale, proposed job structure, edge case analysis. Will be absorbed into other docs after implementation. |
 
 ## Architecture & UI
 

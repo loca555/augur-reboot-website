@@ -5,6 +5,9 @@ tags: [fork-risk, methodology]
 
 # Fork Risk Assessment Methodology
 
+> **Complementary docs**: See [[fork-risk-monitoring-system]] for the GitHub Actions pipeline,
+> and [[fork-risk-strategy]] for the design rationale behind the workflow.
+
 ## Overview
 
 The Augur Fork Meter provides transparent monitoring of the risk that Augur's oracle will enter a fork state. This document outlines the methodology, calculations, data sources, and infrastructure used to assess this risk.
@@ -71,8 +74,11 @@ Markets are tracked across three persistence layers:
   - Cash (DAI): `0xd5524179cb7ae012f5b642c1d6d700bbaa76b96b`
 
 ### Infrastructure Design
-- **GitHub Actions**: Hourly automated calculations
-- **Event Cache**: Persisted via `actions/cache`, survives between runs. Contains:
+- **GitHub Actions**: Three-job pipeline — [[fork-risk-monitoring-system]]
+  - `risk-monitor`: runs calculation script, uploads artifact, saves cache
+  - `build`: downloads artifact, builds site (fails if data missing)
+  - `deploy`: deploys to GitHub Pages (main branch only)
+- **Event Cache**: Persisted via `actions/cache` with static key (`event-cache-v1`). Contains:
   - Raw events (7-day rolling window, pruned)
   - Tracked markets list (never pruned, only removed when finalized on-chain)
 - **Seed File**: Git-committed `dispute-markets-seed.json` as cache-miss fallback
