@@ -66,7 +66,7 @@ Layout.astro (Base HTML shell)
 3. Auto-refresh every 5 minutes
 4. `ForkMockProvider` wraps for demo scenarios
 
-**Data Source:** `fork-risk.json` is generated hourly by GitHub Actions. See [[fork-risk-monitoring-system]] for the monitoring workflow.
+**Data Source:** `fork-risk.json` is generated hourly by GitHub Actions. See [[fork-monitoring-pipeline]] for the monitoring workflow.
 
 ## Content Collections
 
@@ -115,7 +115,7 @@ src/
 ├── styles/           # global.css (single source of truth for theme)
 ├── types/            # TypeScript type definitions
 └── utils/            # Helper functions
-scripts/              # Node.js scripts (fork risk calculation)
+scripts/              # Node.js scripts (fork monitor calculation)
 docs/                 # Project documentation
 public/               # Static assets (fonts, images, data)
 ```
@@ -137,13 +137,8 @@ Non-linear mapping for intuitive display:
 - **Active disputes**: Dispute bond, threshold %, dispute round
 - **Demo mode**: Additional controls and current values
 
-### Risk Calculation
+### Threshold Calculation
 ```typescript
-const forkThresholdPercent = (largestActiveDisputeBond / 275000) * 100
-if (forkThresholdPercent < 10) return 'LOW'
-if (forkThresholdPercent < 25) return 'MODERATE'
-if (forkThresholdPercent < 75) return 'HIGH'
-return 'ELEVATED'
+const forkThresholdPercent = (largestActiveDisputeBond / forkThreshold) * 100
 ```
-
-Uses actual contributed amounts from `DisputeCrowdsourcerContribution` events.
+Where `forkThreshold` is read live from `universe.getDisputeThresholdForFork()`. See [[fork-monitoring-methodology]] for the full calculation.
