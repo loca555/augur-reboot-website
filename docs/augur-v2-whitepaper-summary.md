@@ -1,9 +1,14 @@
+---
+title: Augur v2 Whitepaper Summary
+tags: [whitepaper, augur, oracle]
+---
+
 # Augur v2 Whitepaper Summary
 
 > Derived from: *Augur: a Decentralized Oracle and Prediction Market Platform (v2.0)*
 > Authors: Jack Peterson, Joseph Krug, Micah Zoltu, Austin K. Williams, Stephanie Alexander
 > Date: March 21, 2025 | Forecast Foundation
-> See also: `docs/augur-protocol-v2-reference.md` for fork mechanics quick-reference
+> See also: [[augur-protocol-v2-reference]] for fork mechanics quick-reference
 
 ## Overview
 

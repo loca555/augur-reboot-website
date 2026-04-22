@@ -1,6 +1,11 @@
+---
+title: Protocol Evolution - Augur v2 to Lituus
+tags: [whitepaper, augur, lituus, comparison]
+---
+
 # Protocol Evolution: Augur v2 → Lituus
 
-> Comparative analysis derived from reading both the Augur v2 whitepaper (Peterson et al., March 2025) and the Lituus whitepaper (Garner & Monastirsky, January 2026).
+> Comparative analysis derived from [[augur-v2-whitepaper-summary]] (Peterson et al., March 2025) and [[lituus-whitepaper-summary]] (Garner & Monastirsky, January 2026).
 
 ## Overview
 

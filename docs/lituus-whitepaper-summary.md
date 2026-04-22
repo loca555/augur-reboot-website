@@ -1,3 +1,8 @@
+---
+title: Lituus Whitepaper Summary
+tags: [whitepaper, lituus, oracle, mbufsr]
+---
+
 # Lituus Whitepaper Summary
 
 > Derived from: *A Bribery-Resistant Group-Strategyproof Oracle*
