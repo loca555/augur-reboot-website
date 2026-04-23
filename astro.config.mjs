@@ -14,7 +14,13 @@ const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
 // GitHub Pages specific configuration
 const gitHubPagesConfig = {
   base: process.env.BASE_PATH || '/',
-  output: /** @type {'static'} */ ('static')
+  output: /** @type {'static'} */ ('static'),
+  // На GH Pages без Cloudflare-рантайма sharp доступен, но под base-путём
+  // Astro image pipeline иногда конструирует URL вне схемы file://, что роняет readFile.
+  // Отключаем оптимизацию — статика копируется как есть.
+  image: {
+    service: { entrypoint: 'astro/assets/services/noop' }
+  }
 };
 
 // Cloudflare specific configuration (for local development and preview)
