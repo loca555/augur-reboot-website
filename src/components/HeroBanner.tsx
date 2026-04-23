@@ -152,6 +152,7 @@ const MigrationCountdown: React.FC = () => {
         OPENS IN
       </span>
       <span
+        role="timer"
         aria-live="polite"
         aria-label={ariaLabel}
         className="block text-primary"

@@ -223,9 +223,9 @@ const Terminal: React.FC = () => {
     }
   }, [open]);
 
-  // Прокрутка лога вниз
+  // Прокрутка лога вниз при каждом добавлении строки
   useEffect(() => {
-    if (open) {
+    if (open && log.length > 0) {
       logEndRef.current?.scrollIntoView({ behavior: 'auto', block: 'end' });
     }
   }, [log, open]);
