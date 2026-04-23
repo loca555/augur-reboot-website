@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import PerspectiveGridTunnel from "../components/PerspectiveGridTunnel.tsx";
 import GoogleAnalytics from "../components/GoogleAnalytics.astro";
+import Terminal from "../components/Terminal.tsx";
 import { withBase } from "../lib/utils";
 
 interface Props {
@@ -127,6 +128,7 @@ const {
 			vanishingPoint={0.75}
 		/>
 		<slot />
+		<Terminal client:only="react" transition:persist />
 	</body>
 
 	<script>

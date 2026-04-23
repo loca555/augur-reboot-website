@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { $appStore, UIState } from '../stores/animationStore';
 import AsciiText from '@/components/AsciiText';
@@ -9,6 +9,34 @@ import BorderBeam from '@/components/ui/BorderBeam';
 import { SirenIcon } from '@phosphor-icons/react';
 import { AugurLogo } from '@/components/icons';
 import { withBase } from '@/lib/utils';
+
+// Целевая дата открытия миграционного окна Moon Fork
+const MIGRATION_TARGET_ISO = '2026-06-01T00:00:00Z';
+
+interface CountdownParts {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+  done: boolean;
+}
+
+function computeCountdown(targetMs: number): CountdownParts {
+  const diff = targetMs - Date.now();
+  if (diff <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0, done: true };
+  }
+  const seconds = Math.floor(diff / 1000);
+  return {
+    days: Math.floor(seconds / 86400),
+    hours: Math.floor((seconds % 86400) / 3600),
+    minutes: Math.floor((seconds % 3600) / 60),
+    seconds: seconds % 60,
+    done: false,
+  };
+}
+
+const pad = (n: number) => n.toString().padStart(2, '0');
 
 // Animation timing table (delays in ms)
 const TIMINGS = {
@@ -61,6 +89,84 @@ const ASCII_ART = `██╗ ███████╗     ██████╗ 
  ██║ ╚════██║     ██╔══██╗ ██╔══╝   ██╔══██╗ ██║   ██║ ██║   ██║    ██║    ██║ ██║╚██╗██║ ██║   ██║
  ██║ ███████║     ██║  ██║ ███████╗ ██████╔╝ ╚██████╔╝ ╚██████╔╝    ██║    ██║ ██║ ╚████║ ╚██████╔╝
 ╚═╝ ╚══════╝     ╚═╝  ╚═╝ ╚══════╝ ╚═════╝   ╚═════╝   ╚═════╝     ╚═╝    ╚═╝ ╚═╝  ╚═══╝  ╚═════╝`;
+
+const MigrationCountdown: React.FC = () => {
+  const targetMs = new Date(MIGRATION_TARGET_ISO).getTime();
+  const [parts, setParts] = useState<CountdownParts>(() => computeCountdown(targetMs));
+
+  useEffect(() => {
+    let intervalId: number | null = null;
+
+    const tick = () => setParts(computeCountdown(targetMs));
+
+    const start = () => {
+      if (intervalId !== null) return;
+      tick();
+      intervalId = window.setInterval(tick, 1000);
+    };
+
+    const stop = () => {
+      if (intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) stop();
+      else start();
+    };
+
+    start();
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    return () => {
+      stop();
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, [targetMs]);
+
+  if (parts.done) {
+    return (
+      <span
+        className="sm:ml-3 sm:pl-3 sm:border-l border-t sm:border-t-0 pt-2 sm:pt-0 mt-2 sm:mt-0 block sm:inline-flex items-center text-loud-foreground"
+        style={{ borderColor: 'rgba(42, 231, 168, 0.4)' }}
+        aria-live="polite"
+      >
+        MIGRATION WINDOW OPEN
+      </span>
+    );
+  }
+
+  const ariaLabel = `Migration window opens in ${parts.days} days ${parts.hours} hours ${parts.minutes} minutes`;
+
+  return (
+    <span
+      className="sm:ml-3 sm:pl-3 sm:border-l border-t sm:border-t-0 pt-2 sm:pt-0 mt-2 sm:mt-0 block sm:inline-flex flex-col items-center sm:items-start"
+      style={{ borderColor: 'rgba(42, 231, 168, 0.4)' }}
+    >
+      <span
+        className="block uppercase text-muted-foreground"
+        style={{ letterSpacing: '0.2em', fontSize: '0.7em' }}
+      >
+        OPENS IN
+      </span>
+      <span
+        aria-live="polite"
+        aria-label={ariaLabel}
+        className="block text-primary"
+        style={{
+          fontFamily: 'var(--font-mono)',
+          fontWeight: 400,
+          fontVariantNumeric: 'tabular-nums',
+          fontSize: '0.9em',
+        }}
+      >
+        {parts.days}d {pad(parts.hours)}h {pad(parts.minutes)}m {pad(parts.seconds)}s
+      </span>
+    </span>
+  );
+};
 
 const HeroBanner: React.FC = () => {
   const appState = useStore($appStore);
@@ -202,8 +308,9 @@ const HeroBanner: React.FC = () => {
             <AsciiText
               ref={asciiTextRef}
               content={ASCII_ART}
-              className="text-[clamp(0.325rem,1vw,0.625rem)] leading-[1.1]"
+              className="hidden sm:block text-[clamp(0.325rem,1vw,0.625rem)] leading-[1.1]"
             />
+            <h1 className="hero-mobile-heading sm:hidden">Is Rebooting</h1>
             <span ref={lineRightRef} className="h-px bg-foreground" />
           </h2>
 
@@ -230,10 +337,13 @@ const HeroBanner: React.FC = () => {
               <BorderBeam duration={2.5}>
                 <a
                   href={withBase('/faq')}
-                  className="font-display bg-foreground/5 tracking-wide flex items-center px-4 py-2 sm:text-xl font-semibold text-loud-foreground uppercase shadow-[0_0_10px_oklch(from_var(--color-foreground)_l_c_h/_0.4)] hover:fx-glow-sm focus:fx-glow-sm focus:outline-none whitespace-nowrap"
+                  className="font-display bg-foreground/5 tracking-wide flex flex-col sm:flex-row items-center px-4 py-2 sm:text-xl font-semibold text-loud-foreground uppercase shadow-[0_0_10px_oklch(from_var(--color-foreground)_l_c_h/_0.4)] hover:fx-glow-sm focus:fx-glow-sm focus:outline-none sm:whitespace-nowrap"
                 >
-                  <SirenIcon className="w-6 h-6 border-muted-foreground/80 rounded-full p-1 mr-3" />
-                  THE FORK IS HERE! OWN REP? ACT NOW.
+                  <span className="flex items-center">
+                    <SirenIcon className="w-6 h-6 border-muted-foreground/80 rounded-full p-1 mr-3" />
+                    THE FORK IS HERE! OWN REP? ACT NOW.
+                  </span>
+                  <MigrationCountdown />
                 </a>
               </BorderBeam>
             </div>

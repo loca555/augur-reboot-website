@@ -280,6 +280,146 @@
 	}
 }
 
+/* Терминал-easter-egg — открывается по ~ */
+.augur-terminal-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 80;
+	background: rgba(5, 10, 7, 0.92);
+	backdrop-filter: blur(2px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+}
+
+.augur-terminal-panel {
+	width: 100%;
+	max-width: 860px;
+	padding: 1rem 1.25rem;
+	border: 1px solid rgba(42, 231, 168, 0.35);
+	box-shadow: inset 0 0 24px rgba(42, 231, 168, 0.08), 0 0 24px rgba(42, 231, 168, 0.15);
+	background: rgba(5, 10, 7, 0.6);
+	font-family: var(--font-mono), monospace;
+	color: var(--color-foreground);
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.augur-terminal-titlebar {
+	display: flex;
+	justify-content: space-between;
+	font-size: 0.75rem;
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	color: var(--color-muted-foreground);
+}
+
+.augur-terminal-log {
+	white-space: pre-wrap;
+	min-height: 60vh;
+	max-height: 70vh;
+	overflow-y: auto;
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.augur-terminal-log .cmd {
+	color: var(--color-primary);
+}
+
+.augur-terminal-log .muted {
+	color: var(--color-muted-foreground);
+}
+
+.augur-terminal-log .warn {
+	color: var(--color-yellow-400);
+}
+
+.augur-terminal-log .err {
+	color: var(--color-red-500);
+}
+
+.augur-terminal-log .out {
+	color: var(--color-foreground);
+}
+
+.augur-terminal-prompt {
+	display: flex;
+	align-items: center;
+	font-size: 0.875rem;
+}
+
+.augur-terminal-prompt .cmd {
+	color: var(--color-primary);
+}
+
+.augur-terminal-input {
+	flex: 1;
+	background: transparent;
+	border: none;
+	outline: none;
+	color: var(--color-foreground);
+	caret-color: var(--color-primary);
+	font-family: inherit;
+	font-size: inherit;
+}
+
+/* Контекстная кнопка под fork-gauge — цвет адаптируется к уровню риска */
+.fork-action-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	border: 1px solid currentColor;
+	padding: 0.35rem 0.75rem;
+	font-family: var(--font-display);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: currentColor;
+	outline: none;
+	transition: background 0.2s ease, filter 0.2s ease;
+}
+
+.fork-action-btn .arrow {
+	display: inline-block;
+	transition: transform 0.2s ease;
+}
+
+.fork-action-btn:hover,
+.fork-action-btn:focus-visible {
+	background: rgba(42, 231, 168, 0.08);
+	filter: drop-shadow(0 0 var(--glow-size-sm) currentColor);
+}
+
+.fork-action-btn:hover .arrow,
+.fork-action-btn:focus-visible .arrow {
+	transform: translateX(4px);
+}
+
+/* Mobile fallback для ASCII art в hero — совпадает по градиенту и анимации */
+.hero-mobile-heading {
+	font-family: var(--font-display);
+	font-weight: 700;
+	font-size: clamp(2.2rem, 11vw, 4rem);
+	letter-spacing: 0.1em;
+	line-height: 1;
+	text-transform: uppercase;
+	background: linear-gradient(to bottom, var(--color-green-600), var(--color-green-400), var(--color-green-600));
+	background-size: 100% 200%;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	opacity: 0;
+	animation: scale-in 0.4s ease-in 2.6s forwards, gradient-animation 2s linear 3s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-mobile-heading {
+		animation: scale-in 0.4s ease-in 2.6s forwards;
+	}
+}
+
 /* --- Prose: color overrides + rehype plugin support --- */
 .prose {
 	--tw-prose-headings: var(--color-loud-foreground);
